@@ -6,7 +6,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         String nome, desc, dt, cat;
-        int opcao, prio, status, num;
+        int opcao, prio, status, num ;
 
         CadastroTarefa cadastroTarefas = new CadastroTarefa();
 
@@ -53,11 +53,8 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("Tarefa a ser removida: ");
-                    num = sc.nextInt();
-                    cadastroTarefas.removerTarefa(num);
+                    cadastroTarefas.removerTarefa();
                     break;
-
                 case 3:
                     // Atualizar uma tarefa
                     break;

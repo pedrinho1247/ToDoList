@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Scanner;
 
 class CadastroTarefa {
     ArrayList<Tarefa> lista = new ArrayList<>();
@@ -21,13 +22,18 @@ class CadastroTarefa {
         }
     }
 
-    public void removerTarefa(int index) {
+    public void removerTarefa() {
         System.out.println("Lista de Tarefas:");
         for (int i = 0; i < lista.size(); i++) {
-            System.out.println("Índice: " + i + ", Nome: " + lista.get(i).nome);
+            System.out.println("Índice " + i + " --> Nome: " + lista.get(i).nome);
         }
-        if (index >= 0 && index < lista.size()) {
-            lista.remove(index);
+        System.out.println("Insira o índice da tarefa a ser removida: ");
+        Scanner sc = new Scanner(System.in);;
+        int num;
+        num = sc.nextInt();
+        sc.nextLine();
+        if (num >= 0 && num < lista.size()) {
+            lista.remove(num);
             System.out.println("Tarefa removida com sucesso.");
         } else {
             System.out.println("Índice inválido. Não foi possível remover a tarefa.");
