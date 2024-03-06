@@ -1,5 +1,6 @@
 var tarefas = []
 
+//Função Cadastrar 
 function cadastro() {
     var nome = document.getElementById('nome').value;
     var descricao = document.getElementById('descricao').value;
@@ -20,12 +21,12 @@ function cadastro() {
     tarefas.push(tarefa);
     console.log(tarefas);
 
-}    
+}
+
 //Cadastrar -> Formuçário
 document.getElementById('cadastrar').onclick = cadastro;
 
-//Listar -> Ordem adicionada
-document.getElementById('listar').onclick = function() {
+function listar(){
 
     document.getElementById('listagem').innerHTML = '';
 
@@ -58,6 +59,10 @@ document.getElementById('listar').onclick = function() {
                     <th><span> Status: </span></th>
                     <td><span>${tarefas[i].status}</span></td>
                 </tr>
+                <tr class="edicao">
+                    <th><button type="button" class="btn btn-warning" id="bt-ed${i}">Editar</button></th>
+                    <th><button type="button" class="btn btn-danger" id="bt-ex${i}">Excluir</button></span></th>
+                </tr>
             </table>
             <br>
         `;
@@ -66,7 +71,10 @@ document.getElementById('listar').onclick = function() {
     document.getElementById('listagem').innerHTML += html;
 }
 
-//Limpar tela
+//Listar -> Ordem adicionada
+document.getElementById('listar').onclick = listar;
+
+//Limpar tela (Ok)
 document.getElementById('limpar').onclick = function() {
     tarefas = []
     document.getElementById('listagem').innerHTML = '';
@@ -74,96 +82,61 @@ document.getElementById('limpar').onclick = function() {
 
 //Editar
 document.getElementById('editar').onclick = function () {
-    document.getElementById('editar').innerHTML = 'Salvar edição';
-    document.getElementById('cadastrar').style.display = 'none';
-    document.getElementById('listar').style.display = 'none';
-    document.getElementById('limpar').style.display = 'none';
 
-    document.getElementById('listagem').innerHTML = '';
-
-    var html = 
-    '<div class="col-md-4">'+
-        '<label for="eventos" class="form-label">Eventos</label>'+
-        '<select id="eventos" class="form-select">';
-
-    for (var c = 0; c < tarefas.length; c++) {
-        html += '<option id="opcao_' + c + '">' + tarefas[c].nome + '</option>';
+    var edicoes = document.getElementsByClassName('edicao');
+    for(var t = 0; t < edicoes.length; t++) {
+        edicoes[t].style.display = "block";
     }
 
-    html += '</select></div>';
-
-    document.getElementById('listagem').innerHTML += html;
-
-    // Adicionando evento de mudança ao elemento select
-    document.getElementById('eventos').onchange = function() {
-        var selectedIndex = this.selectedIndex;
-        // Preencher os inputs com os valores correspondentes
-        document.getElementById('nome').value = tarefas[selectedIndex].nome;
-        document.getElementById('descricao').value = tarefas[selectedIndex].descricao;
-        document.getElementById('data').value = tarefas[selectedIndex].data;
-        document.getElementById('prioridade').value = tarefas[selectedIndex].prioridade;
-        document.getElementById('categoria').value = tarefas[selectedIndex].categoria;
-        document.getElementById('status').value = tarefas[selectedIndex].status;
-    };
-
-    // Adicionando evento de clique ao botão 'Salvar edição'
-    document.getElementById('editar').onclick = function() {
-        var selectedIndex = document.getElementById('eventos').selectedIndex;
-        // Atualizar os valores correspondentes no array 'tarefas'
-        tarefas[selectedIndex].nome = document.getElementById('nome').value;
-        tarefas[selectedIndex].descricao = document.getElementById('descricao').value;
-        tarefas[selectedIndex].data = document.getElementById('data').value;
-        tarefas[selectedIndex].prioridade = document.getElementById('prioridade').value;
-        tarefas[selectedIndex].categoria = document.getElementById('categoria').value;
-        tarefas[selectedIndex].status = document.getElementById('status').value;
-
-        // Atualizar a lista de eventos
-        document.getElementById('eventos').innerHTML = '';
-        for (var c = 0; c < tarefas.length; c++) {
-            document.getElementById('eventos').innerHTML += '<option id="opcao_' + c + '">' + tarefas[c].nome + '</option>';
-        }
-
-        document.getElementById('editar').innerHTML = 'Editar';
-        document.getElementById('cadastrar').style.display = 'initial';
-        document.getElementById('listar').style.display = 'initial';
-        document.getElementById('limpar').style.display = 'initial';
-        document.getElementById('listagem').innerHTML = '';
-    };
-};
-
-//Corrigir BUG...
-
-
-// Função para lidar com o clique no botão "Excluir"
-function handleDeleteClick() {
-    var selectedIndex = document.getElementById('eventos').selectedIndex;
-    // Remover a tarefa selecionada do array 'tarefas'
-    tarefas.splice(selectedIndex, 1);
-
-    // Atualizar a lista de eventos
-    document.getElementById('eventos').innerHTML = '';
-    for (var c = 0; c < tarefas.length; c++) {
-        document.getElementById('eventos').innerHTML += '<option id="opcao_' + c + '">' + tarefas[c].nome + '</option>';
-    }
-
-    // Resetar os campos de entrada e a listagem
-    document.getElementById('nome').value = '';
-    document.getElementById('descricao').value = '';
-    document.getElementById('data').value = '';
-    document.getElementById('prioridade').value = '';
-    document.getElementById('categoria').value = '';
-    document.getElementById('status').value = '';
-    document.getElementById('listagem').innerHTML = '';
-
-    document.getElementById('cadastrar').style.display = 'initial';
-    document.getElementById('listar').style.display = 'initial';
-    document.getElementById('limpar').style.display = 'initial';
-    document.getElementById('editar').innerHTML = 'Editar';
-    document.getElementById('listagem').innerHTML = '';
 }
 
-// Adicionar o evento de clique ao botão 'Excluir'
-document.getElementById('excluir').addEventListener('click', handleDeleteClick);
+//Excluir
+document.getElementById('listagem').onclick = function(event) {
+    var elementoClicado = event.target.id;
+    if (elementoClicado.startsWith("bt-ex")) { 
+        var index = parseInt(elementoClicado.replace("bt-ex", "")); 
+        tarefas.splice(index, 1) 
+        alert("Tarefa Excluida com sucesso!")
+        listar();
+    }    
+}
+
+
+    // // Adicionando evento de mudança ao elemento select
+    // document.getElementById('eventos').onchange = function() {
+    //     var selectedIndex = this.selectedIndex;
+    //     // Preencher os inputs com os valores correspondentes
+    //     document.getElementById('nome').value = tarefas[selectedIndex].nome;
+    //     document.getElementById('descricao').value = tarefas[selectedIndex].descricao;
+    //     document.getElementById('data').value = tarefas[selectedIndex].data;
+    //     document.getElementById('prioridade').value = tarefas[selectedIndex].prioridade;
+    //     document.getElementById('categoria').value = tarefas[selectedIndex].categoria;
+    //     document.getElementById('status').value = tarefas[selectedIndex].status;
+    // };
+
+    // // Adicionando evento de clique ao botão 'Salvar edição'
+    // document.getElementById('editar').onclick = function() {
+    //     var selectedIndex = document.getElementById('eventos').selectedIndex;
+    //     // Atualizar os valores correspondentes no array 'tarefas'
+    //     tarefas[selectedIndex].nome = document.getElementById('nome').value;
+    //     tarefas[selectedIndex].descricao = document.getElementById('descricao').value;
+    //     tarefas[selectedIndex].data = document.getElementById('data').value;
+    //     tarefas[selectedIndex].prioridade = document.getElementById('prioridade').value;
+    //     tarefas[selectedIndex].categoria = document.getElementById('categoria').value;
+    //     tarefas[selectedIndex].status = document.getElementById('status').value;
+
+    //     // Atualizar a lista de eventos
+    //     document.getElementById('eventos').innerHTML = '';
+    //     for (var c = 0; c < tarefas.length; c++) {
+    //         document.getElementById('eventos').innerHTML += '<option id="opcao_' + c + '">' + tarefas[c].nome + '</option>';
+    //     }
+
+    //     document.getElementById('editar').innerHTML = 'Editar';
+    //     document.getElementById('cadastrar').style.display = 'initial';
+    //     document.getElementById('listar').style.display = 'initial';
+    //     document.getElementById('limpar').style.display = 'initial';
+    //     document.getElementById('listagem').innerHTML = '';
+    // };
 
 
 
