@@ -14,11 +14,11 @@ Para executar o projeto, siga as instruções abaixo:
 4. Navegue até o diretório raiz do projeto no terminal.
 5. Compile o código-fonte executando o seguinte comando:
 
-javac TodoList.java
+        javac TodoList.java
 
 5. Após a compilação bem-sucedida, execute o programa com o seguinte comando:
    
-java TodoList
+        java TodoList
 
 :construction: **Alterações Futuras** 
 
