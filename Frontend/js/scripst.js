@@ -131,6 +131,9 @@ document.getElementById('editar').onclick = function () {
     };
 };
 
+//Corrigir BUG...
+
+
 // Função para lidar com o clique no botão "Excluir"
 function handleDeleteClick() {
     var selectedIndex = document.getElementById('eventos').selectedIndex;
@@ -150,6 +153,12 @@ function handleDeleteClick() {
     document.getElementById('prioridade').value = '';
     document.getElementById('categoria').value = '';
     document.getElementById('status').value = '';
+    document.getElementById('listagem').innerHTML = '';
+
+    document.getElementById('cadastrar').style.display = 'initial';
+    document.getElementById('listar').style.display = 'initial';
+    document.getElementById('limpar').style.display = 'initial';
+    document.getElementById('editar').innerHTML = 'Editar';
     document.getElementById('listagem').innerHTML = '';
 }
 
