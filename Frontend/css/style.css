@@ -28,3 +28,7 @@ style
     display:none;
     color: #ff0000; 
 }
+
+#editar {display:none;}
+
+#atualizar{display:none;}
